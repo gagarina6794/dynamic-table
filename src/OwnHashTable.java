@@ -1,6 +1,6 @@
 
 public class OwnHashTable implements HandMadeCollection {
-
+    
     private int size = 8;
     private String[] table = new String[size];
     private String[] newTable;
