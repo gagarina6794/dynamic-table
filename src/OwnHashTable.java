@@ -1,78 +1,63 @@
 
 public class OwnHashTable implements HandMadeCollection {
-    
-    private int size = 8;
-    private String[] table = new String[size];
-    private String[] newTable;
-    private boolean check = false;
-    private String remove;
-    private int totalLength = 0;
 
-    private void resize() {
+    private int size;
+    private String[] table;
 
-        newTable = new String[size];
-        newTable = table.clone();
-        int newSize = size * 2;
-        size = newSize;
-
-        table = new String[size];
-
-        for (int i = 0; i < newTable.length; i++) {
-
-            table[i] = newTable[i];
-        }
+    public OwnHashTable() {
+        this.size = 0;
+        this.table = new String[8];
     }
 
     @Override
     public void add(String word) {
 
         if (!check(word)) {
-            for (int i = 0; i < size; i++) {
-                if (table[i] == null) {
-                    table[i] = word;
-                    totalLength++;
-                    System.out.println("OK");
-                    if ((float) totalLength >= (size * 0.75f)) {
-                        resize();
-                    }
-                    return;
-                }
+            if ((float) size >= (table.length * 0.75f)) {
+                resize();
             }
+            table[size] = word;
+            size++;
+            System.out.println("OK");
         } else {
             System.out.println("FAIL");
         }
-
     }
 
     @Override
     public void remove(String word) {
-        remove = "FAIL";
-        for (int i = 0; i < table.length; i++) {
-            if (table[i] != null) {
-                if (table[i].equals(word)) {
-                    table[i] = null;
-                    totalLength--;
-                    remove = "OK";
-                }
+
+        String flag = "FAIL";
+
+        for (int i = 0; i < size; i++) {
+
+            if (table[i].equals(word)) {
+                size--;
+                table[i] = table[size];
+                table[size] = null;
+                flag = "OK";
             }
         }
-        System.out.println(remove);
+        System.out.println(flag);
     }
 
     @Override
     public boolean check(String word) {
 
-        for (String c : table) {
-            if (c == null) {
-                check = false;
-            } else if (c.equals(word)) {
-                check = true;
-                break;
+        for (int i = 0; i < size; i++) {
+            if (table[i].equals(word)) {
+                return true;
             }
         }
-        return check;
+        return false;
     }
 
-   
+    private void resize() {
+
+        String[] newTable;
+        newTable = table.clone();
+        table = new String[newTable.length * 2];
+        System.arraycopy(newTable, 0, table, 0, size);
+    }
 
 }
