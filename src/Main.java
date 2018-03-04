@@ -1,24 +1,24 @@
 //https://stepik.org/lesson/43221/step/1?adaptive=true&unit=21285
 
-
 import java.util.Scanner;
-
 
 public class Main {
 
     public static void main(String[] args) {
-        
+
         Scanner operation = new Scanner(System.in);
-        
-       OwnHashTable table = new OwnHashTable();
-       
+
+        //OwnHashTable table = new OwnHashTable();
+        //ListTable table = new ListTable();
+        MapTable table = new MapTable();
+
         int i = 0;
-               
-        while (i < 14) {
+
+        while (i < 7) {
 
             String symbol = operation.next();
             String word = operation.next();
-                       
+
             switch (symbol) {
                 case "+":
                     table.add(word);
@@ -27,13 +27,12 @@ public class Main {
                     table.remove(word);
                     break;
                 case "?":
-                    System.out.println(table.check(word) ? "OK" : "FAIL");
+                    table.check(word);
                     break;
-                default: break;
+                default:
+                    break;
             }
-           
             i++;
         }
-       
     }
 }
